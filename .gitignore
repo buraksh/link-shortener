@@ -1,0 +1,6 @@
+.idea
+.vscode
+go.work
+*.test
+*.out
+.env

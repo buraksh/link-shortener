@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - '${APP_PORT:-3000}:3000'
+    restart: always
+    volumes:
+      - '.env:/app/.env'
+
+  db:
+    image: mysql/mysql-server:8.0
+    ports:
+      - '${DB_PORT:-3306}:3306'
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-root}'
+      - 'MYSQL_DATABASE=${DB_DATABASE:-test}'
+      - 'MYSQL_USER=${DB_USER:-test}'
+      - 'MYSQL_PASSWORD=${DB_PASSWORD:-test}'
+    #healthcheck:
+    #  test: mysql -h $$DB_HOST -u $$DB_USER --password=$$DB_PASSWORD
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
